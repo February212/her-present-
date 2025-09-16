@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Happy Birthday!</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Comic Sans MS', cursive, sans-serif;
+      text-align: center;
+      background: linear-gradient(to right, #ff9a9e, #fad0c4);
+      color: #333;
+      overflow-x: hidden;
+    }
+    h1 {
+      font-size: 3em;
+      margin-top: 50px;
+      color: #ff4081;
+    }
+    h2 {
+      font-size: 2em;
+      margin: 20px 0;
+    }
+    #countdown {
+      font-size: 2em;
+      margin-top: 30px;
+      color: #444;
+    }
+    .balloon {
+      position: absolute;
+      bottom: -150px;
+      width: 80px;
+      height: 100px;
+      border-radius: 50% 50% 50% 50%;
+      animation: float 10s infinite ease-in;
+    }
+    @keyframes float {
+      0% { transform: translateY(0) rotate(0deg); }
+      100% { transform: translateY(-120vh) rotate(360deg); }
+    }
+    .gallery {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 15px;
+      margin: 40px;
+    }
+    .gallery img {
+      width: 100%;
+      border-radius: 15px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+    }
+    .message-wall {
+      margin: 40px;
+      text-align: left;
+      max-width: 600px;
+      margin-left: auto;
+      margin-right: auto;
+      background: #fff;
+      padding: 20px;
+      border-radius: 15px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+    }
+    .message-wall h3 {
+      margin-top: 0;
+    }
+    .message {
+      background: #f1f1f1;
+      padding: 10px;
+      border-radius: 10px;
+      margin-bottom: 10px;
+    }
+    input, textarea, button {
+      width: 100%;
+      padding: 10px;
+      margin: 5px 0;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+    }
+    button {
+      background: #ff4081;
+      color: white;
+      border: none;
+      cursor: pointer;
+      font-size: 1em;
+    }
+    button:hover {
+      background: #e91e63;
+    }
+  </style>
+</head>
+<body>
+  <h1>🎉 Happy Birthday, [Name]! 🎂</h1>
+  <h2>Wishing you all the happiness in the world!</h2>
+  <div id="countdown"></div>
+
+  <!-- Balloons -->
+  <div class="balloon" style="left: 10%; background: #ff4081;"></div>
+  <div class="balloon" style="left: 30%; background: #ffeb3b;"></div>
+  <div class="balloon" style="left: 50%; background: #4caf50;"></div>
+  <div class="balloon" style="left: 70%; background: #2196f3;"></div>
+  <div class="balloon" style="left: 90%; background: #9c27b0;"></div>
+
+  <!-- Background music -->
+  <audio autoplay loop>
+    <source src="https://www.bensound.com/bensound-music/bensound-celebration.mp3" type="audio/mpeg">
+    Your browser does not support the audio element.
+  </audio>
+
+  <!-- Photo Gallery -->
+  <h2>📸 Memories Gallery</h2>
+  <div class="gallery">
+    <img src="https://via.placeholder.com/300x200.png?text=Photo+1" alt="Memory 1">
+    <img src="https://via.placeholder.com/300x200.png?text=Photo+2" alt="Memory 2">
+    <img src="https://via.placeholder.com/300x200.png?text=Photo+3" alt="Memory 3">
+    <img src="https://via.placeholder.com/300x200.png?text=Photo+4" alt="Memory 4">
+  </div>
+
+  <!-- Message Wall -->
+  <div class="message-wall">
+    <h3>📝 Leave a Birthday Message</h3>
+    <form id="messageForm">
+      <input type="text" id="name" placeholder="Your Name" required>
+      <textarea id="messageInput" placeholder="Write your message..." required></textarea>
+      <button type="submit">Post Message</button>
+    </form>
+    <div id="messages"></div>
+  </div>
+
+  <script>
+    // Countdown Timer
+    const birthday = new Date("2025-09-20 00:00:00").getTime();
+    const countdown = document.getElementById("countdown");
+
+    setInterval(() => {
+      const now = new Date().getTime();
+      const distance = birthday - now;
+
+      if (distance < 0) {
+        countdown.innerHTML = "🎂 It's the big day! Happy Birthday! 🎉";
+        return;
+      }
+
+      const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+      const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+      const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+      countdown.innerHTML = `${days}d ${hours}h ${minutes}m ${seconds}s until the celebration 🎉`;
+    }, 1000);
+
+    // Message Wall (local only)
+    const form = document.getElementById("messageForm");
+    const messagesDiv = document.getElementById("messages");
+
+    form.addEventListener("submit", function(e) {
+      e.preventDefault();
+      const name = document.getElementById("name").value;
+      const messageInput = document.getElementById("messageInput").value;
+
+      if (name && messageInput) {
+        const message = document.createElement("div");
+        message.classList.add("message");
+        message.innerHTML = `<strong>${name}:</strong> ${messageInput}`;
+        messagesDiv.prepend(message);
+
+        form.reset();
+      }
+    });
+  </script>
+</body>
+</html>
